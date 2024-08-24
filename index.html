@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./main.js" defer></script>
+    <title>Todo App</title>
+</head>
+<body>
+    <main class="main-container">
+        <aside class="sidebar">
+            <h2 class="sidebar-title">All Tasks</h2>
+            <ul class="task-list">
+                <li class="task-item">
+                    <span class="task-label">Favourites</span>
+                    <span class="task-count"></span>
+                </li>
+                <li class="task-item">
+                    <span class="task-label">Groceries</span>
+                    <span class="task-count"></span>
+                </li>
+                <li class="task-item">
+                    <span class="task-label">Work</span>
+                    <span class="task-count"></span>
+                </li>
+                <li class="task-item">
+                    <span class="task-label">Study</span>
+                    <span class="task-count"></span>
+                </li>
+                <li class="task-item">
+                    <span class="task-label">Sports</span>
+                    <span class="task-count"></span>
+                </li>
+            </ul>
+            <form class="new-category-form" action="">
+                <input type="search" class="new-category-input" placeholder="+ New category">
+            </form>
+        </aside>
+        <div class="task-form-container">
+            <h1 class="title">All Tasks</h1>
+            <form class="task-form" action="">
+                <input type="search" name="task" class="task-input" placeholder="Add a new task" required>
+                <select id="category-select" name="category" class="category-select" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="favourites">Favourites</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="work">Work</option>
+                    <option value="study">Study</option>
+                    <option value="sports">Sports</option>
+                </select>
+                <button type="submit" class="add-button"><strong>Add</strong></button>
+            </form>
+            <ul class="all-task">
+            </ul>
+        </div>
+        
+    </main>
+    
+</body>
+</html>
+    <!-- <li class="all-task-item" for="">
+                        <button class="cercle"></button>
+                        <p class="task-text"><strong>Call Peter</strong></p>
+                        <span class="task-category">word</span>
+                    </li>
+                    <li class="all-task-item" for="">
+                        <button class="cercle"></button>
+                        <p class="task-text"><strong>Read chapter 3 from Math book</strong></p>
+                        <span class="task-category">Study</span>
+                    </li>
+                    <li class="all-task-item" for="">
+                        <button class="cercle"></button>
+                        <p class="task-text"><strong>Prepare roadmap for MVP</strong></p>
+                        <span class="task-category">Groceries</span>
+                    </li> -->
