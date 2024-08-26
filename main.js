@@ -16,6 +16,32 @@ function getRandomColor() {
     return color;
 }
 
+// // Function to add event listeners to all .cercle buttons
+// function addCheckEventListeners() {
+//     var check = document.querySelectorAll('.cercle');
+
+//     check.forEach(button => {
+//         button.addEventListener('click', function() {
+//             // Toggle the checked class on the button
+//             this.classList.toggle('checked');
+
+//             // Find the corresponding task text element
+//             var taskText = document.querySelector('.task-text');
+
+//             // Apply text decoration based on the checked state
+//             if (this.classList.contains('checked')) {
+//                 taskText.style.textDecoration = 'line-through';
+//                 taskText.style.color = '#EB5757';
+//             } else {
+//                 taskText.style.textDecoration = 'none';
+//                 taskText.style.color="inherit";
+//             }
+
+//             console.log('checked');
+//         });
+//     });
+// }
+
 // Function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -29,24 +55,19 @@ addButton.addEventListener('click', function(e) {
     var categoryValue = categoryInput.value.trim();
     var selectedCategory = categorySelect.value;
 
-    console.log(`The value is : ${taskValue} And this category is : ${selectedCategory}`)
     if (categoryValue) {
-        
         var newOption = document.createElement('option');
         newOption.value = capitalizeFirstLetter(categoryValue);
         newOption.textContent = capitalizeFirstLetter(categoryValue);
         categorySelect.appendChild(newOption);
 
-        console.log(`new Category is ${categoryValue} `);
         var newTaskItem = document.createElement('li');
-        newTaskItem.className='task-item';
-        newTaskItem.innerHTML+=`
-        <span class="category">
-        ${capitalizeFirstLetter(categoryValue)}
-        </span>
-        <span class="task-count"></span>
+        newTaskItem.className = 'task-item';
+        newTaskItem.innerHTML = `
+            <span class="category">${capitalizeFirstLetter(categoryValue)}</span>
+            <span class="task-count"></span>
         `;
-        taskList.appendChild(newTaskItem)
+        taskList.appendChild(newTaskItem);
         categoryInput.value = '';
     } 
     
@@ -83,9 +104,20 @@ addButton.addEventListener('click', function(e) {
     
         taskInput.value = '';
         categorySelect.selectedIndex = 0;
-    }
-     else if (!categoryValue) {
+
+        // Add event listener for the new task's button
+        tasksItem.querySelector('.cercle').addEventListener('click', function() {
+            var taskText = this.nextElementSibling; // Selects the .task-text element next to this .cercle button
+            if (this.classList.toggle('checked')) {
+                taskText.style.textDecoration = 'line-through';
+                taskText.style.color = '#EB5757';
+            } else {
+                taskText.style.textDecoration = 'none';
+                taskText.style.color = 'inherit';
+            }
+        });
+
+    } else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
     }
 });
-    
