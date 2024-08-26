@@ -1,10 +1,12 @@
-/*Déclaration des variables*/
+// Déclaration des variables
 var addButton = document.querySelector('.add-button');
 var taskInput = document.querySelector('.task-input');
 var categorySelect = document.querySelector('#category-select');
 var allTasks = document.querySelector('.all-task');
+var taskList = document.querySelector('.task-list');
+var categoryInput = document.querySelector('.new-category-input');
 
-// géré les color en random
+// Generate color with function random
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -14,44 +16,76 @@ function getRandomColor() {
     return color;
 }
 
-// Ajouter un événement au bouton "Add"
+// Function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+// Add event listener for the button
 addButton.addEventListener('click', function(e) {
     e.preventDefault();
-    // Pour la récupération des valeurs et catégory
+    
     var taskValue = taskInput.value.trim();
-    var categoryValue = categorySelect.value;
+    var categoryValue = categoryInput.value.trim();
+    var selectedCategory = categorySelect.value;
 
-    console.log(`Pour la Valeur : ${taskValue} , Pour la CategoryValue : ${categoryValue}`);
+    console.log(`The value is : ${taskValue} And this category is : ${selectedCategory}`)
+    if (categoryValue) {
+        
+        var newOption = document.createElement('option');
+        newOption.value = capitalizeFirstLetter(categoryValue);
+        newOption.textContent = capitalizeFirstLetter(categoryValue);
+        categorySelect.appendChild(newOption);
 
-    // Vérification des champ n'est pas vide
-    if (taskValue && categoryValue) {
-
+        console.log(`new Category is ${categoryValue} `);
+        var newTaskItem = document.createElement('li');
+        newTaskItem.className='task-item';
+        newTaskItem.innerHTML+=`
+        <span class="category">
+        ${capitalizeFirstLetter(categoryValue)}
+        </span>
+        <span class="task-count"></span>
+        `;
+        taskList.appendChild(newTaskItem)
+        categoryInput.value = '';
+    } 
+    
+    if (taskValue && selectedCategory) {
         var tasksItem = document.createElement('li');
-        tasksItem.className = 'all-task-item';
-
         var cercleButton = document.createElement('button');
-        cercleButton.className = 'cercle';
-
         var taskText = document.createElement('p');
+        var taskCategory = document.createElement('span');
+        var likeButton = document.createElement('button'); 
+        var removeButton = document.createElement('button'); 
+
+        tasksItem.className = 'all-task-item';
+        cercleButton.className = 'cercle';
         taskText.className = 'task-text';
         taskText.innerHTML = `<strong>${taskValue}</strong>`;
-
-        var taskCategory = document.createElement('span');
         taskCategory.className = 'task-category';
-        taskCategory.textContent = categoryValue;
-        taskCategory.style.backgroundColor = getRandomColor(); // Appliquer la couleur aléatoire
-
-
+        likeButton.className = 'btn-heart';
+        likeButton.innerHTML = `
+            <i class="fa-regular fa-heart"></i>
+        `;
+        removeButton.className = 'btn-remove'; 
+        removeButton.innerHTML = `
+            <i class="fa-solid fa-trash"></i>
+        `;
+        taskCategory.textContent = capitalizeFirstLetter(selectedCategory);
+        taskCategory.style.backgroundColor = getRandomColor();
+    
         tasksItem.appendChild(cercleButton);
         tasksItem.appendChild(taskText);
         tasksItem.appendChild(taskCategory);
-
+        tasksItem.appendChild(likeButton);
+        tasksItem.appendChild(removeButton); 
         allTasks.appendChild(tasksItem);
-
-        // Réinitialiser l'input et le select
+    
         taskInput.value = '';
         categorySelect.selectedIndex = 0;
-    } else {
+    }
+     else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
     }
 });
+    
