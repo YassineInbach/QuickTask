@@ -79,10 +79,28 @@ button{
     align-items: center;
     gap: 0 15px;
     padding-bottom:20px;
+    cursor: pointer;
 }
 .task-category{
     font-size: 14px;
     padding: 6px 20px;
     border-radius: 20px;
     color: white;
+}
+.btn-remove , .btn-heart{
+    padding: 0;
+    background: transparent;
+    color: black;
+    opacity: 0;
+}
+.fa-heart , .fa-trash{
+    font-size: 1.5em;
+}
+.fa-heart{
+    color: red;
+}
+.all-task-item:hover .btn-heart,
+.all-task-item:hover .btn-remove
+{
+    opacity: 1;
 }
