@@ -16,35 +16,19 @@ function getRandomColor() {
     return color;
 }
 
-// // Function to add event listeners to all .cercle buttons
-// function addCheckEventListeners() {
-//     var check = document.querySelectorAll('.cercle');
-
-//     check.forEach(button => {
-//         button.addEventListener('click', function() {
-//             // Toggle the checked class on the button
-//             this.classList.toggle('checked');
-
-//             // Find the corresponding task text element
-//             var taskText = document.querySelector('.task-text');
-
-//             // Apply text decoration based on the checked state
-//             if (this.classList.contains('checked')) {
-//                 taskText.style.textDecoration = 'line-through';
-//                 taskText.style.color = '#EB5757';
-//             } else {
-//                 taskText.style.textDecoration = 'none';
-//                 taskText.style.color="inherit";
-//             }
-
-//             console.log('checked');
-//         });
-//     });
-// }
-
 // Function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+// Function to remove taskItem
+function removeTask(taskItem, cercleButton) {
+    if (cercleButton.classList.contains('checked')) {
+        taskItem.remove(); // Remove the task item
+        console.log('Task removed:', taskItem);
+    } else {
+        alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
+    }
 }
 
 // Add event listener for the button
@@ -70,7 +54,7 @@ addButton.addEventListener('click', function(e) {
         taskList.appendChild(newTaskItem);
         categoryInput.value = '';
     } 
-    
+
     if (taskValue && selectedCategory) {
         var tasksItem = document.createElement('li');
         var cercleButton = document.createElement('button');
@@ -105,17 +89,26 @@ addButton.addEventListener('click', function(e) {
         taskInput.value = '';
         categorySelect.selectedIndex = 0;
 
-        // Add event listener for the new task's button
+        // Event listener for checkbox button
         tasksItem.querySelector('.cercle').addEventListener('click', function() {
-            var taskText = this.nextElementSibling; // Selects the .task-text element next to this .cercle button
+            var taskText = this.nextElementSibling;
             if (this.classList.toggle('checked')) {
                 taskText.style.textDecoration = 'line-through';
                 taskText.style.color = '#EB5757';
+                removeButton.disabled = false; // Enable the remove button
+                console.log('checked');
             } else {
                 taskText.style.textDecoration = 'none';
                 taskText.style.color = 'inherit';
+                removeButton.disabled = true; // Disable the remove button
             }
         });
+
+        // // Event listener for remove button
+        removeButton.addEventListener('click', function() {
+            removeTask(tasksItem , cercleButton)
+        });
+
 
     } else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
