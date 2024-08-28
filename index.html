@@ -35,13 +35,21 @@
                 </li>
             </ul>
             <form class="new-category-form" action="">
-                <input type="search" class="new-category-input" placeholder="+ New category">
+                <input type="search" class="new-category-input" placeholder="+ New category" required>
             </form>
         </aside>
-        <div class="task-form-container">
-            <h1 class="title">All Tasks</h1>
+        <section class="task-form-container">
+            <div class="task-header">
+                <h1>All Tasks</h1>
+                <form class="search-form" action="#" method="get">
+                    <input type="text" id="filter-input" placeholder="Search tasks" aria-label="Search tasks" required>
+                    <button type="button" id="toggle-search" aria-label="Toggle search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>   
             <form class="task-form" action="">
-                <input type="search" name="task" class="task-input" placeholder="Add a new task" required>
+                <input type="text" name="task" class="task-input" placeholder="Add a new task" required>
                 <select id="category-select" name="category" class="category-select" required>
                     <option value="" disabled selected>Select a category</option>
                     <option value="favourites">Favourites</option>
@@ -54,10 +62,8 @@
             </form>
             <ul class="all-task">
             </ul>
-        </div>
-        
+        </section>
     </main>
-    
 </body>
 </html>
     
