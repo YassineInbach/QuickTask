@@ -54,12 +54,18 @@ filterInput.addEventListener('input', filterTasks);
 //Toggle event listener
 toggleSearch.addEventListener('click', () => {
     var searchForm = document.querySelector('.search-form');
-    if (searchForm.style.width === "") {
-        searchForm.style.width = "40%";
-        filterInput.style.padding= '0 10px';
+    var screenWidth = window.innerWidth;
+
+    if (searchForm.style.width == "0%" || searchForm.style.width =="" ) {
+        if (screenWidth <= 600) {
+            searchForm.style.width = "100%";
+        } else {
+            searchForm.style.width = "70%";
+        }
+        filterInput.style.padding = '0 10px';
     } else {
         searchForm.style.width = "0%";
-        filterInput.style.padding= '0';
+        filterInput.style.padding = '0';
     }
 });
 
@@ -96,7 +102,7 @@ addButton.addEventListener('click', function(e) {
         var likeButton = document.createElement('button'); 
         var removeButton = document.createElement('button'); 
 
-        tasksItem.className = 'all-task-item';
+        tasksItem.className = 'all-task-item flex items-center';
         cercleButton.className = 'cercle';
         taskText.className = 'task-text';
         taskText.innerHTML = `<strong>${taskValue}</strong>`;
