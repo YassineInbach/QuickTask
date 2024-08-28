@@ -81,7 +81,7 @@
     color: black;
     display: none;
 }
-.fa-heart , .fa-trash , .fa-magnifying-glass{
+.fa-heart,.fa-trash,.fa-magnifying-glass{
     font-size: 1.5em;
 }
 .fa-heart{
