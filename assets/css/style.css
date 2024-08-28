@@ -1,0 +1,141 @@
+@import url('./reset.css');
+
+.flex{
+    display: flex;
+}
+.items-center{
+    align-items: center;
+}
+.items-normal{
+    align-items: normal;
+}
+.justify-between{
+    justify-content: space-between;
+}
+
+.main-container {
+    flex-wrap: wrap-reverse;
+    margin: 100px auto;
+    gap: 30px;
+}
+
+.sidebar {
+    border-right: 1px solid #ABABAB;
+    padding: 50px 50px 30px 0;  
+}
+
+.task-item , .sidebar-title , .task-header{
+    margin-bottom: 15px;
+}
+
+.new-category-input {
+    background-color: transparent;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #ABABAB;
+}
+
+.task-form-container{
+    flex: 1 1 430px;
+}
+.task-form{
+    gap: 15px;
+}
+.task-input{
+    width: 100%;
+    padding: 12px 11px;
+}
+.task-input::placeholder{
+    font-size: 14px;
+}
+.category-select{
+    padding: 10px 0;
+    border:1.5px solid black; 
+}
+.all-task{
+    overflow-y: scroll;
+    height: 350px;
+    margin: 30px 10px 0;
+}
+.cercle{
+    position: relative;
+    border: 2px solid #EB5757;
+    border-radius: 10px;
+    padding: 12px;
+    background: transparent;
+}
+.all-task-item{
+    gap: 0 15px;
+    padding-bottom:20px;
+    cursor: pointer;
+}
+.task-category{
+    font-size: 14px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    color: white;
+}
+.btn-remove , .btn-heart{
+    padding: 0;
+    background: transparent;
+    color: black;
+    display: none;
+}
+.fa-heart , .fa-trash , .fa-magnifying-glass{
+    font-size: 1.5em;
+}
+.fa-heart{
+    color: red;
+}
+.all-task-item:hover .btn-heart,
+.all-task-item:hover .btn-remove
+{
+    display: block;
+}
+.cercle::after {
+    display: none;
+    content: "";
+    position: absolute;
+    background: url("../images/check.png") no-repeat center;
+    background-size: contain;
+    inset: -4px 0 0 2px;
+}
+.cercle.checked::after {
+    display: block;
+}
+.task-header{
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 15px;
+}
+.search-form > input{
+    width: 100%;
+}
+.search-form{
+    justify-content: flex-end;
+    padding: 10px 0;
+    width: 0;
+    transition: width 0.5s ease;
+} 
+
+
+/********************************************************media query**********************************************/
+@media screen and (max-width : 745px){
+    .sidebar {
+        border-right: 0;
+        border-top: 1px solid #ABABAB;
+        width: 100%;
+    }
+    .all-task {
+        overflow-y:inherit;
+        height: auto;
+    }
+}
+ @media screen and (max-width : 1000px){
+    .task-form{
+       flex-wrap: wrap;
+    }
+    .category-select ,.task-form button{
+        flex: 1 1 200px;
+    }
+ }
