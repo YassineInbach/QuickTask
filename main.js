@@ -5,6 +5,8 @@ var categorySelect = document.querySelector('#category-select');
 var allTasks = document.querySelector('.all-task');
 var taskList = document.querySelector('.task-list');
 var categoryInput = document.querySelector('.new-category-input');
+var filterInput = document.getElementById('filter-input');
+var toggleSearch = document.getElementById('toggle-search');
 
 // Generate color with function random
 function getRandomColor() {
@@ -30,6 +32,37 @@ function removeTask(taskItem, cercleButton) {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
 }
+
+// Function filter task
+function filterTasks(){
+    var filterValue = filterInput.value.toLowerCase();
+    var tasksItem = document.querySelectorAll('.all-task-item');
+    tasksItem.forEach((task) => {
+        var taskText = task.querySelector('.task-text').innerText.toLowerCase(); // Texte de la tâche en minuscules
+        if (taskText.includes(filterValue)) {
+            task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
+            console.log('Showing task:', taskText);
+        } else {
+            task.style.display = 'none'; // Masquer l'élément sinon
+            console.log('Hidding task:', taskText);
+        }
+    }) 
+}
+
+filterInput.addEventListener('input', filterTasks);
+
+//Toggle event listener
+toggleSearch.addEventListener('click', () => {
+    var searchForm = document.querySelector('.search-form');
+    if (searchForm.style.width === "") {
+        searchForm.style.width = "40%";
+        filterInput.style.padding= '0 10px';
+    } else {
+        searchForm.style.width = "0%";
+        filterInput.style.padding= '0';
+    }
+});
+
 
 // Add event listener for the button
 addButton.addEventListener('click', function(e) {
@@ -104,11 +137,10 @@ addButton.addEventListener('click', function(e) {
             }
         });
 
-        // // Event listener for remove button
+        // Event listener for remove button
         removeButton.addEventListener('click', function() {
             removeTask(tasksItem , cercleButton)
         });
-
 
     } else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
