@@ -28,6 +28,7 @@ function removeTask(taskItem, cercleButton) {
     if (cercleButton.classList.contains('checked')) {
         taskItem.remove(); // Remove the task item
         console.log('Task removed:', taskItem);
+        updateCategoryCount()
     } else {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
@@ -50,6 +51,41 @@ function filterTasks(){
 }
 
 filterInput.addEventListener('input', filterTasks);
+// Function to generate a unique ID
+function generateUniqueId() {
+    return 'task-' + Math.random().toString(36).substr(2, 9);
+}
+function updateCategoryCount(categoryToUpdate) {
+    var categoryCounts = {};
+    var allTasks = document.querySelectorAll('.all-task-item');
+    allTasks.forEach(function(task) {
+        var category = task.querySelector('.task-category').textContent.trim();
+        if (categoryCounts[category]) {
+            categoryCounts[category]++;
+        } else {
+            categoryCounts[category] = 1;
+        }
+    });
+
+    console.log("categoryCounts :", categoryCounts);
+
+    var taskItems = document.querySelectorAll('.task-item');
+    taskItems.forEach(function(taskItem) {
+        var category = taskItem.querySelector('.category').textContent.trim();
+        var countSpan = taskItem.querySelector('.task-count');
+        if (categoryToUpdate === category) {
+            countSpan.textContent = categoryCounts[category] ;
+            if (countSpan.textContent > 0) {
+                countSpan.style.backgroundColor = "black";
+                countSpan.style.color = "white"; 
+            } else {
+                countSpan.style.backgroundColor = "transparent"; 
+                countSpan.style.color = "black"; 
+            }
+        }
+    });
+}
+
 
 //Toggle event listener
 toggleSearch.addEventListener('click', () => {
@@ -69,7 +105,6 @@ toggleSearch.addEventListener('click', () => {
     }
 });
 
-
 // Add event listener for the button
 addButton.addEventListener('click', function(e) {
     e.preventDefault();
@@ -80,7 +115,6 @@ addButton.addEventListener('click', function(e) {
 
     if (categoryValue) {
         var newOption = document.createElement('option');
-        newOption.value = capitalizeFirstLetter(categoryValue);
         newOption.textContent = capitalizeFirstLetter(categoryValue);
         categorySelect.appendChild(newOption);
 
@@ -148,7 +182,20 @@ addButton.addEventListener('click', function(e) {
             removeTask(tasksItem , cercleButton)
         });
 
+        // Event listener for like button
+        likeButton.addEventListener("click", function() {
+            var icon = this.querySelector('i');            
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                updateCategoryCount(taskCategory.textContent.trim());
+            } else {
+                icon.classList.replace('fa-solid', 'fa-regular');
+            }
+        });
+
     } else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
     }
 });
+
+
