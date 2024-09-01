@@ -64,6 +64,12 @@
     padding: 12px;
     background: transparent;
 }
+.task-count{
+    padding: 3px 8px;
+    font-size: 12px;
+    margin-left: 10px;
+    border-radius: 15px;
+}
 .all-task-item{
     gap: 0 15px;
     padding-bottom:20px;
@@ -117,8 +123,6 @@
     width: 0;
     transition: width 0.5s ease;
 } 
-
-
 /********************************************************media query**********************************************/
 @media screen and (max-width : 745px){
     .sidebar {
