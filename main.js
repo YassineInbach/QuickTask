@@ -26,9 +26,10 @@ function capitalizeFirstLetter(string) {
 // Function to remove taskItem
 function removeTask(taskItem, cercleButton) {
     if (cercleButton.classList.contains('checked')) {
+        var taskCategory = taskItem.querySelector('.task-category').textContent.trim();
         taskItem.remove(); // Remove the task item
         console.log('Task removed:', taskItem);
-        updateCategoryCount()
+        updateCategoryCount(taskCategory)
     } else {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
@@ -51,10 +52,12 @@ function filterTasks(){
 }
 
 filterInput.addEventListener('input', filterTasks);
+
 // Function to generate a unique ID
 function generateUniqueId() {
     return 'task-' + Math.random().toString(36).substr(2, 9);
 }
+// Function updateCategoryCount
 function updateCategoryCount(categoryToUpdate) {
     var categoryCounts = {};
     var allTasks = document.querySelectorAll('.all-task-item');
