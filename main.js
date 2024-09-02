@@ -76,7 +76,7 @@ function updateCategoryCount(categoryToUpdate) {
         if (categoryToUpdate === category) {
             countSpan.textContent = categoryCounts[category] ;
             if (countSpan.textContent > 0) {
-                countSpan.style.backgroundColor = "black";
+                countSpan.style.backgroundColor = "red";
                 countSpan.style.color = "white"; 
             } else {
                 countSpan.style.backgroundColor = "transparent"; 
@@ -85,7 +85,6 @@ function updateCategoryCount(categoryToUpdate) {
         }
     });
 }
-
 
 //Toggle event listener
 toggleSearch.addEventListener('click', () => {
@@ -184,18 +183,16 @@ addButton.addEventListener('click', function(e) {
 
         // Event listener for like button
         likeButton.addEventListener("click", function() {
-            var icon = this.querySelector('i');            
+            var icon = this.querySelector('i');
             if (icon.classList.contains('fa-regular')) {
                 icon.classList.replace('fa-regular', 'fa-solid');
                 updateCategoryCount(taskCategory.textContent.trim());
             } else {
-                icon.classList.replace('fa-solid', 'fa-regular');
+                icon.classList.replace('fa-solid', 'fa-regular');        
             }
         });
-
+        
     } else if (!categoryValue) {
         alert('Veuillez remplir tous les champs.');
     }
 });
-
-
