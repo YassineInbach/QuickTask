@@ -40,7 +40,7 @@ function filterTasks(){
     var filterValue = filterInput.value.toLowerCase();
     var tasksItem = document.querySelectorAll('.all-task-item');
     tasksItem.forEach((task) => {
-        var taskText = task.querySelector('.task-text').innerText.toLowerCase(); // Texte de la tâche en minuscules
+        var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
         if (taskText.includes(filterValue)) {
             task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
             console.log('Showing task:', taskText);
@@ -53,10 +53,7 @@ function filterTasks(){
 
 filterInput.addEventListener('input', filterTasks);
 
-// Function to generate a unique ID
-function generateUniqueId() {
-    return 'task-' + Math.random().toString(36).substr(2, 9);
-}
+
 // Function updateCategoryCount
 function updateCategoryCount(categoryToUpdate) {
     var categoryCounts = {};
