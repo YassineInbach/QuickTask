@@ -29,7 +29,7 @@ function removeTask(taskItem, cercleButton) {
         var taskCategory = taskItem.querySelector('.task-category').textContent.trim();
         taskItem.remove(); // Remove the task item
         console.log('Task removed:', taskItem);
-        updateCategoryCount(taskCategory)
+        updateCategoryCount(taskCategory , -1)
     } else {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
@@ -55,26 +55,14 @@ filterInput.addEventListener('input', filterTasks);
 
 
 // Function updateCategoryCount
-function updateCategoryCount(categoryToUpdate) {
-    var categoryCounts = {};
-    var allTasks = document.querySelectorAll('.all-task-item');
-    allTasks.forEach(function(task) {
-        var category = task.querySelector('.task-category').textContent.trim();
-        if (categoryCounts[category]) {
-            categoryCounts[category]++;
-        } else {
-            categoryCounts[category] = 1;
-        }
-    });
-
-    console.log("categoryCounts :", categoryCounts);
-
+function updateCategoryCount(categoryToUpdate, countChange) {
     var taskItems = document.querySelectorAll('.task-item');
     taskItems.forEach(function(taskItem) {
         var category = taskItem.querySelector('.category').textContent.trim();
         var countSpan = taskItem.querySelector('.task-count');
         if (categoryToUpdate === category) {
-            countSpan.textContent = categoryCounts[category] ;
+            var currentCount = parseInt(countSpan.textContent) || 0;
+            countSpan.textContent = currentCount + countChange;
             if (countSpan.textContent > 0) {
                 countSpan.style.backgroundColor = "red";
                 countSpan.style.color = "white"; 
@@ -184,11 +172,15 @@ addButton.addEventListener('click', function(e) {
         // Event listener for like button
         likeButton.addEventListener("click", function() {
             var icon = this.querySelector('i');
+            var taskCategoryText = taskCategory.textContent.trim();
+            
+            // Toggle like state
             if (icon.classList.contains('fa-regular')) {
                 icon.classList.replace('fa-regular', 'fa-solid');
-                updateCategoryCount(taskCategory.textContent.trim());
+                updateCategoryCount(taskCategoryText, 1); // Increment count
             } else {
-                icon.classList.replace('fa-solid', 'fa-regular');        
+                icon.classList.replace('fa-solid', 'fa-regular');
+                updateCategoryCount(taskCategoryText, -1); // Decrement count
             }
         });
         
