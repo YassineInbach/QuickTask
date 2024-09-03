@@ -62,8 +62,9 @@ function updateCategoryCount(categoryToUpdate, countChange) {
         var countSpan = taskItem.querySelector('.task-count');
         if (categoryToUpdate === category) {
             var currentCount = parseInt(countSpan.textContent) || 0;
-            countSpan.textContent = currentCount + countChange;
-            if (countSpan.textContent > 0) {
+            var newCount = Math.max(currentCount + countChange, 0);
+            countSpan.textContent = newCount;
+            if (newCount > 0) {
                 countSpan.style.backgroundColor = "red";
                 countSpan.style.color = "white"; 
             } else {
@@ -73,6 +74,8 @@ function updateCategoryCount(categoryToUpdate, countChange) {
         }
     });
 }
+
+
 
 //Toggle event listener
 toggleSearch.addEventListener('click', () => {
