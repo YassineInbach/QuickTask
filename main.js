@@ -1,4 +1,11 @@
-// Déclaration des variables
+const categoryColors = {
+    'Groceries': '#27AE60',
+    'Work': '#2F80ED',
+    'Study': '#F2994A',
+    'Sports': '#9B51E0',
+};
+
+// Declare variables
 var addButton = document.querySelector('.add-button');
 var taskInput = document.querySelector('.task-input');
 var categorySelect = document.querySelector('#category-select');
@@ -7,87 +14,178 @@ var taskList = document.querySelector('.task-list');
 var categoryInput = document.querySelector('.new-category-input');
 var filterInput = document.getElementById('filter-input');
 var toggleSearch = document.getElementById('toggle-search');
-
-// Generate color with function random
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+var categoryBtn = document.querySelector('.new-category-btn');
+var btnAllTasks = document.querySelector('.btn-all-tasks');
+var title = document.getElementById('title');
 
 // Function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+// Function to filter tasks by category
+function filterTasksByCategory(category) {
+    document.querySelectorAll('.all-task-item').forEach(task => {
+        let taskCategory = task.querySelector('.task-category').textContent.toLowerCase();
+        task.style.display = taskCategory === category.toLowerCase() ? '' : 'none';
+    });
+}
+
+// Add event listener "Afficher toutes les tâches"
+btnAllTasks.addEventListener('click', () => {
+    var tasksItems = document.querySelectorAll('.all-task-item');
+    var categoryItems = document.querySelectorAll('.category');
+    tasksItems.forEach((task) => {
+        task.style.display = '';
+    });
+    categoryItems.forEach((categoryItem) => {
+        categoryItem.style.borderLeft = "none";
+        categoryItem.style.paddingLeft = "0";
+        categoryItem.style.color = "black";
+    });
+    title.textContent = "ALL Tasks";
+    title.style.color = "black";
+    console.log('Toutes les tâches sont affichées.');
+});
+
+// Function to handle category button clicks
+function handleCategoryClick() {
+    var category = this.getAttribute('data-category').toLowerCase();
+    var categoryItem = document.querySelectorAll('.category');
+    var borderColor = categoryColors[capitalizeFirstLetter(category)] || 'black';
+
+    title.textContent = capitalizeFirstLetter(category);
+    title.style.color = borderColor;
+
+    categoryItem.forEach((task) => {
+        var taskCategory = task.getAttribute('data-category').toLowerCase();
+        if (taskCategory === category) {
+            task.style.borderLeft = `5px solid ${borderColor}`;
+            task.style.paddingLeft = '10px';
+            task.style.color = `${borderColor}`;
+        } else {
+            task.style.borderLeft = "none";
+            task.style.paddingLeft = 0;
+            task.style.color = "black";
+        }
+    });
+
+    filterTasksByCategory(category);
+}
+
+// Function to attach event listeners to category buttons
+function attachCategoryButtonListeners() {
+    document.querySelectorAll('.category').forEach(button => {
+        button.removeEventListener('click', handleCategoryClick); // Remove previous listener
+        button.addEventListener('click', handleCategoryClick);
+    });
+}
+
+// Function to increment the task count category
+function incrementTaskCount(category, countChange) {
+    var categoryButtons = document.querySelectorAll('.category');
+    categoryButtons.forEach(button => {
+        if (button.getAttribute('data-category').toLowerCase() === category.toLowerCase()) {
+            let taskCount = button.nextElementSibling; // The next sibling is the task count span
+            let currentCount = parseInt(taskCount.textContent) || 0; // Get the current count
+            taskCount.textContent = Math.max(currentCount + countChange, 0); // Update the count
+        }
+    });
+}
+
+// Function to handle remove button click
+function handleRemoveClick(event) {
+    const removeButton = event.target.closest('.btn-remove');
+    if (removeButton) {
+        const taskItem = removeButton.closest('.all-task-item');
+        const cercleButton = taskItem.querySelector('.checkbox');
+        const category = taskItem.querySelector('.task-category').textContent;
+        removeTask(taskItem, cercleButton, category);
+    }
+}
+
+// Function to attach event listeners to remove buttons
+function attachRemoveButtonListeners() {
+    document.querySelectorAll('.btn-remove').forEach(button => {
+        button.removeEventListener('click', handleRemoveClick); // Remove previous listener
+        button.addEventListener('click', handleRemoveClick);
+    });
+}
+
 // Function to remove taskItem
-function removeTask(taskItem, cercleButton) {
+function removeTask(taskItem, cercleButton, category) {
     if (cercleButton.classList.contains('checked')) {
-        var taskCategory = taskItem.querySelector('.task-category').textContent.trim();
         taskItem.remove(); // Remove the task item
         console.log('Task removed:', taskItem);
-        updateCategoryCount(taskCategory , -1)
+        incrementTaskCount(category, -1); // Update the category count
+        updateCategoryCount(-1); // Update the total count
+        confirm('You wanted to delete this task');
     } else {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
 }
 
-// Function filter task
-function filterTasks(){
-    var filterValue = filterInput.value.toLowerCase();
-    var tasksItem = document.querySelectorAll('.all-task-item');
-    tasksItem.forEach((task) => {
-        var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
-        if (taskText.includes(filterValue)) {
-            task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
-            console.log('Showing task:', taskText);
-        } else {
-            task.style.display = 'none'; // Masquer l'élément sinon
-            console.log('Hidding task:', taskText);
-        }
-    }) 
-}
+// // Function filter task
+// function filterTasks(){
+//     var filterValue = filterInput.value.toLowerCase();
+//     var tasksItem = document.querySelectorAll('.all-task-item');
+//     tasksItem.forEach((task) => {
+//         var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
+//         if (taskText.includes(filterValue)) {
+//             task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
+//             console.log('Showing task:', taskText);
+//         } else {
+//             task.style.display = 'none'; // Masquer l'élément sinon
+//             console.log('Hidding task:', taskText);
+//         }
+//     }) 
+// }
 
-filterInput.addEventListener('input', filterTasks);
+// filterInput.addEventListener('input', filterTasks);
 
+// Add event listener for new category
+categoryBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
-// Function updateCategoryCount
-function updateCategoryCount(categoryToUpdate, countChange) {
-    var taskItems = document.querySelectorAll('.task-item');
-    taskItems.forEach(function(taskItem) {
-        var category = taskItem.querySelector('.category').textContent.trim();
-        var countSpan = taskItem.querySelector('.task-count');
-        if (categoryToUpdate === category) {
-            var currentCount = parseInt(countSpan.textContent) || 0;
-            var newCount = Math.max(currentCount + countChange, 0);
-            countSpan.textContent = newCount;
-            if (newCount > 0) {
-                countSpan.style.backgroundColor = "red";
-                countSpan.style.color = "white"; 
-            } else {
-                countSpan.style.backgroundColor = "transparent"; 
-                countSpan.style.color = "black"; 
-            }
-        }
-    });
-}
+    var categoryValue = categoryInput.value.trim();
 
+    if (categoryValue) {
+        let formattedCategoryValue = capitalizeFirstLetter(categoryValue);
+        
+        // Add to the select element
+        let newOption = document.createElement('option');
+        newOption.value = formattedCategoryValue;
+        newOption.textContent = formattedCategoryValue;
+        categorySelect.appendChild(newOption);
 
+        // Add to the task list
+        let newTaskItem = document.createElement('li');
+        newTaskItem.className = 'task-item';
+        newTaskItem.innerHTML = `
+            <button class="category" data-category="${formattedCategoryValue}">
+            ${formattedCategoryValue}</button>
+            <span class="task-count">0</span>
+        `;
 
-//Toggle event listener
+        taskList.appendChild(newTaskItem);
+
+        // Clear the input
+        categoryInput.value = '';
+
+        // Re-attach event listeners to the new category buttons
+        attachCategoryButtonListeners();
+    } else {
+        alert('Veuillez remplir tous les champs');
+    }
+});
+
+// Toggle event listener
 toggleSearch.addEventListener('click', () => {
     var searchForm = document.querySelector('.search-form');
     var screenWidth = window.innerWidth;
 
-    if (searchForm.style.width == "0%" || searchForm.style.width =="" ) {
-        if (screenWidth <= 600) {
-            searchForm.style.width = "100%";
-        } else {
-            searchForm.style.width = "70%";
-        }
+    if (searchForm.style.width === "0%" || searchForm.style.width === "") {
+        searchForm.style.width = (screenWidth <= 600) ? "100%" : "70%";
         filterInput.style.padding = '0 10px';
     } else {
         searchForm.style.width = "0%";
@@ -95,99 +193,101 @@ toggleSearch.addEventListener('click', () => {
     }
 });
 
-// Add event listener for the button
+// Event listener for task interactions
+allTasks.addEventListener('click', function(e) {
+    var event = e.target;
+
+    // Handle checkbox clicks
+    if (event.classList.contains('checkbox')) {
+        let taskText = event.nextElementSibling;
+
+        // Toggle the 'checked' class
+        event.classList.toggle('checked');
+
+        // Update styles based on the checkbox state
+        if (event.classList.contains('checked')) {
+            taskText.style.textDecoration = 'line-through';
+            taskText.style.color = '#EB5757';
+        } else {
+            taskText.style.textDecoration = 'none';
+            taskText.style.color = 'inherit';
+        }
+    }
+
+    // Handle like button clicks
+    if (event.closest('.btn-heart')) {
+        let likeButtonIcon = event.closest('.btn-heart').querySelector('i');
+        if (likeButtonIcon.classList.contains('fa-regular')) {
+            likeButtonIcon.classList.replace('fa-regular', 'fa-solid');
+            updateCategoryCount(1); 
+        } else {
+            likeButtonIcon.classList.replace('fa-solid', 'fa-regular');
+            updateCategoryCount(-1);
+        }
+    }
+});
+
+// Function to update total count
+function updateCategoryCount(countChange) {
+    let countSpan = document.querySelector('.total-count');
+    let currentCount = parseInt(countSpan.textContent) || 0;
+    let newCount = Math.max(currentCount + countChange, 0);
+    countSpan.textContent = newCount;
+}
+
+// Add event listener for adding tasks
 addButton.addEventListener('click', function(e) {
     e.preventDefault();
-    
+
     var taskValue = taskInput.value.trim();
-    var categoryValue = categoryInput.value.trim();
     var selectedCategory = categorySelect.value;
-
-    if (categoryValue) {
-        var newOption = document.createElement('option');
-        newOption.textContent = capitalizeFirstLetter(categoryValue);
-        categorySelect.appendChild(newOption);
-
-        var newTaskItem = document.createElement('li');
-        newTaskItem.className = 'task-item';
-        newTaskItem.innerHTML = `
-            <span class="category">${capitalizeFirstLetter(categoryValue)}</span>
-            <span class="task-count"></span>
-        `;
-        taskList.appendChild(newTaskItem);
-        categoryInput.value = '';
-    } 
+    var bgColor = categoryColors[capitalizeFirstLetter(selectedCategory)];
 
     if (taskValue && selectedCategory) {
-        var tasksItem = document.createElement('li');
-        var cercleButton = document.createElement('button');
-        var taskText = document.createElement('p');
-        var taskCategory = document.createElement('span');
-        var likeButton = document.createElement('button'); 
-        var removeButton = document.createElement('button'); 
+        let tasksItem = document.createElement('li');
+        let cercleButton = document.createElement('button');
+        let taskText = document.createElement('p');
+        let taskCategory = document.createElement('span');
+        let likeButton = document.createElement('button');
+        let removeButton = document.createElement('button');
 
         tasksItem.className = 'all-task-item flex items-center';
-        cercleButton.className = 'cercle';
+        cercleButton.className = 'checkbox';
         taskText.className = 'task-text';
-        taskText.innerHTML = `<strong>${taskValue}</strong>`;
+        taskText.innerHTML = `<b>${taskValue}</b>`;
         taskCategory.className = 'task-category';
         likeButton.className = 'btn-heart';
-        likeButton.innerHTML = `
-            <i class="fa-regular fa-heart"></i>
-        `;
-        removeButton.className = 'btn-remove'; 
-        removeButton.innerHTML = `
-            <i class="fa-solid fa-trash"></i>
-        `;
+        likeButton.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        removeButton.className = 'btn-remove';
+        removeButton.innerHTML = `<i class="fa-solid fa-trash"></i>`;
         taskCategory.textContent = capitalizeFirstLetter(selectedCategory);
-        taskCategory.style.backgroundColor = getRandomColor();
-    
+
+        if (bgColor) {
+            taskCategory.style.backgroundColor = bgColor;
+        } else {
+            console.log(`No color assigned for category: ${selectedCategory}`);
+        }
+
         tasksItem.appendChild(cercleButton);
         tasksItem.appendChild(taskText);
         tasksItem.appendChild(taskCategory);
         tasksItem.appendChild(likeButton);
-        tasksItem.appendChild(removeButton); 
-        allTasks.appendChild(tasksItem);
-    
+        tasksItem.appendChild(removeButton);
+
+        taskList.appendChild(tasksItem);
+
+        // Clear the input fields
         taskInput.value = '';
-        categorySelect.selectedIndex = 0;
+        categorySelect.value = '';
 
-        // Event listener for checkbox button
-        tasksItem.querySelector('.cercle').addEventListener('click', function() {
-            var taskText = this.nextElementSibling;
-            if (this.classList.toggle('checked')) {
-                taskText.style.textDecoration = 'line-through';
-                taskText.style.color = '#EB5757';
-                removeButton.disabled = false; // Enable the remove button
-                console.log('checked');
-            } else {
-                taskText.style.textDecoration = 'none';
-                taskText.style.color = 'inherit';
-                removeButton.disabled = true; // Disable the remove button
-            }
-        });
-
-        // Event listener for remove button
-        removeButton.addEventListener('click', function() {
-            removeTask(tasksItem , cercleButton)
-        });
-
-        // Event listener for like button
-        likeButton.addEventListener("click", function() {
-            var icon = this.querySelector('i');
-            var taskCategoryText = taskCategory.textContent.trim();
-            
-            // Toggle like state
-            if (icon.classList.contains('fa-regular')) {
-                icon.classList.replace('fa-regular', 'fa-solid');
-                updateCategoryCount(taskCategoryText, 1); // Increment count
-            } else {
-                icon.classList.replace('fa-solid', 'fa-regular');
-                updateCategoryCount(taskCategoryText, -1); // Decrement count
-            }
-        });
-        
-    } else if (!categoryValue) {
-        alert('Veuillez remplir tous les champs.');
+        // Re-attach event listeners to the new remove buttons
+        attachRemoveButtonListeners();
+    } else {
+        alert('Veuillez remplir tous les champs');
     }
 });
+
+attachCategoryButtonListeners();
+attachRemoveButtonListeners();
+
+
