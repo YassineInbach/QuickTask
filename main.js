@@ -122,7 +122,23 @@ function removeTask(taskItem, cercleButton , category) {
     }
 }
 
+// Function filter task
+function filterTasks(){
+    var filterValue = filterInput.value.toLowerCase();
+    var tasksItem = document.querySelectorAll('.all-task-item');
+    tasksItem.forEach((task) => {
+        var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
+        if (taskText.includes(filterValue)) {
+            task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
+            console.log('Showing task:', taskText);
+        } else {
+            task.style.display = 'none'; // Masquer l'élément sinon
+            console.log('Hidding task:', taskText);
+        }
+    }) 
+}
 
+filterInput.addEventListener('input', filterTasks);
 
 // Add event listener for new category
 categoryBtn.addEventListener('click', (e) => {
@@ -284,50 +300,3 @@ addButton.addEventListener('click', function(e) {
 // Initial setup
 attachCategoryButtonListeners();
 attachRemoveButtonListeners();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Function filter task
-// function filterTasks(){
-//     var filterValue = filterInput.value.toLowerCase();
-//     var tasksItem = document.querySelectorAll('.all-task-item');
-//     tasksItem.forEach((task) => {
-//         var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
-//         if (taskText.includes(filterValue)) {
-//             task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
-//             console.log('Showing task:', taskText);
-//         } else {
-//             task.style.display = 'none'; // Masquer l'élément sinon
-//             console.log('Hidding task:', taskText);
-//         }
-//     }) 
-// }
-
-// filterInput.addEventListener('input', filterTasks);
-
-
