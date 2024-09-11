@@ -5,7 +5,7 @@ const categoryColors = {
     'Sports': '#9B51E0',
 };
 
-// Declare variables
+// Déclaration des variables
 var addButton = document.querySelector('.add-button');
 var taskInput = document.querySelector('.task-input');
 var categorySelect = document.querySelector('#category-select');
@@ -24,14 +24,14 @@ function capitalizeFirstLetter(string) {
 }
 
 // Function to filter tasks by category
-function filterTasksByCategory(category) {
+function filterTasksByCategory(category){
     document.querySelectorAll('.all-task-item').forEach(task => {
-        let taskCategory = task.querySelector('.task-category').textContent.toLowerCase();
+        let taskCategory = task.querySelector('.task-category').textContent.toLowerCase(); 
         task.style.display = taskCategory === category.toLowerCase() ? '' : 'none';
     });
-}
+};
 
-// Add event listener "Afficher toutes les tâches"
+// add event listner "Afficher toutes les tâches"
 btnAllTasks.addEventListener('click', () => {
     var tasksItems = document.querySelectorAll('.all-task-item');
     var categoryItems = document.querySelectorAll('.category');
@@ -44,7 +44,7 @@ btnAllTasks.addEventListener('click', () => {
         categoryItem.style.color = "black";
     });
     title.textContent = "ALL Tasks";
-    title.style.color = "black";
+    title.style.color = "black"
     console.log('Toutes les tâches sont affichées.');
 });
 
@@ -52,7 +52,7 @@ btnAllTasks.addEventListener('click', () => {
 function handleCategoryClick() {
     var category = this.getAttribute('data-category').toLowerCase();
     var categoryItem = document.querySelectorAll('.category');
-    var borderColor = categoryColors[capitalizeFirstLetter(category)] || 'black';
+    var borderColor = categoryColors[capitalizeFirstLetter(category)] || 'black'; 
 
     title.textContent = capitalizeFirstLetter(category);
     title.style.color = borderColor;
@@ -63,85 +63,71 @@ function handleCategoryClick() {
             task.style.borderLeft = `5px solid ${borderColor}`;
             task.style.paddingLeft = '10px';
             task.style.color = `${borderColor}`;
+
         } else {
             task.style.borderLeft = "none";
             task.style.paddingLeft = 0;
-            task.style.color = "black";
+            task.style.color = "black"; 
         }
     });
 
     filterTasksByCategory(category);
 }
-
 // Function to attach event listeners to category buttons
-function attachCategoryButtonListeners() {
+function attachCategoryButtonListeners(){
     document.querySelectorAll('.category').forEach(button => {
-        button.removeEventListener('click', handleCategoryClick); // Remove previous listener
+        button.removeEventListener('click', handleCategoryClick); // Ensure no duplicate listeners
         button.addEventListener('click', handleCategoryClick);
     });
-}
+};
 
 // Function to increment the task count category
 function incrementTaskCount(category, countChange) {
+    // Mise à jour du compteur pour la catégorie spécifique
     var categoryButtons = document.querySelectorAll('.category');
     categoryButtons.forEach(button => {
         if (button.getAttribute('data-category').toLowerCase() === category.toLowerCase()) {
-            let taskCount = button.nextElementSibling; // The next sibling is the task count span
-            let currentCount = parseInt(taskCount.textContent) || 0; // Get the current count
-            taskCount.textContent = Math.max(currentCount + countChange, 0); // Update the count
+            let taskCount = button.nextElementSibling; // Le prochain élément frère est le span du compteur de tâches
+            let currentCount = parseInt(taskCount.textContent) || 0; // Obtenir le nombre actuel
+            taskCount.textContent = Math.max(currentCount + countChange, 0); // Met à jour le compteur de la catégorie
         }
     });
 }
 
-// Function to handle remove button click
+
+
 function handleRemoveClick(event) {
     const removeButton = event.target.closest('.btn-remove');
-    if (removeButton) {
-        const taskItem = removeButton.closest('.all-task-item');
-        const cercleButton = taskItem.querySelector('.checkbox');
-        const category = taskItem.querySelector('.task-category').textContent;
-        removeTask(taskItem, cercleButton, category);
-    }
+    const taskItem = removeButton.closest('.all-task-item');
+    const cercleButton = taskItem.querySelector('.checkbox');
+    const category = taskItem.querySelector('.task-category').textContent;
+    removeTask(taskItem, cercleButton, category);
 }
 
-// Function to attach event listeners to remove buttons
+
 function attachRemoveButtonListeners() {
     document.querySelectorAll('.btn-remove').forEach(button => {
-        button.removeEventListener('click', handleRemoveClick); // Remove previous listener
+        button.removeEventListener('click', handleRemoveClick); // Assurez-vous qu'il n'y a pas de double écouteurs
         button.addEventListener('click', handleRemoveClick);
     });
 }
 
+
+
 // Function to remove taskItem
-function removeTask(taskItem, cercleButton, category) {
+function removeTask(taskItem, cercleButton , category) {
     if (cercleButton.classList.contains('checked')) {
         taskItem.remove(); // Remove the task item
         console.log('Task removed:', taskItem);
-        incrementTaskCount(category, -1); // Update the category count
-        updateCategoryCount(-1); // Update the total count
-        confirm('You wanted to delete this task');
+        incrementTaskCount(category, -1); // Met à jour le compteur de la catégorie et le compteur total
+        updateCategoryCount(-1)
+        confirm('You wanted to delete this task')
     } else {
         alert('Veuillez marquer la tâche comme complétée avant de la supprimer.');
     }
 }
 
-// // Function filter task
-// function filterTasks(){
-//     var filterValue = filterInput.value.toLowerCase();
-//     var tasksItem = document.querySelectorAll('.all-task-item');
-//     tasksItem.forEach((task) => {
-//         var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
-//         if (taskText.includes(filterValue)) {
-//             task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
-//             console.log('Showing task:', taskText);
-//         } else {
-//             task.style.display = 'none'; // Masquer l'élément sinon
-//             console.log('Hidding task:', taskText);
-//         }
-//     }) 
-// }
 
-// filterInput.addEventListener('input', filterTasks);
 
 // Add event listener for new category
 categoryBtn.addEventListener('click', (e) => {
@@ -168,7 +154,6 @@ categoryBtn.addEventListener('click', (e) => {
         `;
 
         taskList.appendChild(newTaskItem);
-
         // Clear the input
         categoryInput.value = '';
 
@@ -179,13 +164,17 @@ categoryBtn.addEventListener('click', (e) => {
     }
 });
 
-// Toggle event listener
+//Toggle event listener
 toggleSearch.addEventListener('click', () => {
     var searchForm = document.querySelector('.search-form');
     var screenWidth = window.innerWidth;
 
-    if (searchForm.style.width === "0%" || searchForm.style.width === "") {
-        searchForm.style.width = (screenWidth <= 600) ? "100%" : "70%";
+    if (searchForm.style.width == "0%" || searchForm.style.width =="" ) {
+        if (screenWidth <= 600) {
+            searchForm.style.width = "100%";
+        } else {
+            searchForm.style.width = "70%";
+        }
         filterInput.style.padding = '0 10px';
     } else {
         searchForm.style.width = "0%";
@@ -193,18 +182,16 @@ toggleSearch.addEventListener('click', () => {
     }
 });
 
-// Event listener for task interactions
 allTasks.addEventListener('click', function(e) {
     var event = e.target;
-
-    // Handle checkbox clicks
+    // Gestion des cases à cocher (checkbox)
     if (event.classList.contains('checkbox')) {
         let taskText = event.nextElementSibling;
 
-        // Toggle the 'checked' class
+        // Basculer la classe 'checked'
         event.classList.toggle('checked');
 
-        // Update styles based on the checkbox state
+        // Mettre à jour les styles en fonction de l'état de la case
         if (event.classList.contains('checked')) {
             taskText.style.textDecoration = 'line-through';
             taskText.style.color = '#EB5757';
@@ -214,26 +201,30 @@ allTasks.addEventListener('click', function(e) {
         }
     }
 
-    // Handle like button clicks
+    // Gestion des boutons "like" (btn-heart)
     if (event.closest('.btn-heart')) {
         let likeButtonIcon = event.closest('.btn-heart').querySelector('i');
+        // Basculer l'icône entre 'fa-regular' et 'fa-solid'
         if (likeButtonIcon.classList.contains('fa-regular')) {
             likeButtonIcon.classList.replace('fa-regular', 'fa-solid');
-            updateCategoryCount(1); 
+            // updateCategoryCount(1); 
+            updateCategoryCount(1)
+
         } else {
             likeButtonIcon.classList.replace('fa-solid', 'fa-regular');
-            updateCategoryCount(-1);
+            // updateCategoryCount(-1);
+            updateCategoryCount( -1)
         }
     }
 });
 
-// Function to update total count
 function updateCategoryCount(countChange) {
-    let countSpan = document.querySelector('.total-count');
-    let currentCount = parseInt(countSpan.textContent) || 0;
-    let newCount = Math.max(currentCount + countChange, 0);
-    countSpan.textContent = newCount;
-}
+        let countSpan = document.querySelector('.total-count');
+                let currentCount = parseInt(countSpan.textContent) || 0;
+                let newCount = Math.max(currentCount + countChange, 0);
+                countSpan.textContent = newCount;
+ }
+
 
 // Add event listener for adding tasks
 addButton.addEventListener('click', function(e) {
@@ -257,15 +248,20 @@ addButton.addEventListener('click', function(e) {
         taskText.innerHTML = `<b>${taskValue}</b>`;
         taskCategory.className = 'task-category';
         likeButton.className = 'btn-heart';
-        likeButton.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        likeButton.innerHTML = `
+            <i class="fa-regular fa-heart"></i>
+        `;
         removeButton.className = 'btn-remove';
-        removeButton.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+        removeButton.innerHTML = `
+            <i class="fa-solid fa-trash"></i>
+        `;
         taskCategory.textContent = capitalizeFirstLetter(selectedCategory);
 
         if (bgColor) {
             taskCategory.style.backgroundColor = bgColor;
         } else {
-            console.log(`No color assigned for category: ${selectedCategory}`);
+            console.log(`No color found for category: ${selectedCategory}`); // Debugging statement
+            taskCategory.style.backgroundColor = "#000000"; // Default color
         }
 
         tasksItem.appendChild(cercleButton);
@@ -273,21 +269,68 @@ addButton.addEventListener('click', function(e) {
         tasksItem.appendChild(taskCategory);
         tasksItem.appendChild(likeButton);
         tasksItem.appendChild(removeButton);
+        allTasks.appendChild(tasksItem);
 
-        taskList.appendChild(tasksItem);
-
-        // Clear the input fields
         taskInput.value = '';
-        categorySelect.value = '';
+        categorySelect.selectedIndex = 0;
 
-        // Re-attach event listeners to the new remove buttons
-        attachRemoveButtonListeners();
+        // incrementTaskCount(selectedCategory)
+        incrementTaskCount(selectedCategory , 1)
+         // Event listener for remove button
+        removeButton.addEventListener('click', function() {
+            removeTask(tasksItem , cercleButton , selectedCategory)
+        });
+
     } else {
-        alert('Veuillez remplir tous les champs');
+        alert('Veuillez remplir tous les champs.');
     }
 });
 
+// Initial setup
 attachCategoryButtonListeners();
-attachRemoveButtonListeners();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Function filter task
+// function filterTasks(){
+//     var filterValue = filterInput.value.toLowerCase();
+//     var tasksItem = document.querySelectorAll('.all-task-item');
+//     tasksItem.forEach((task) => {
+//         var taskText = task.querySelector('.task-text').innerText.toLowerCase(); 
+//         if (taskText.includes(filterValue)) {
+//             task.style.display = ''; // Afficher l'élément si le texte contient la valeur de recherche
+//             console.log('Showing task:', taskText);
+//         } else {
+//             task.style.display = 'none'; // Masquer l'élément sinon
+//             console.log('Hidding task:', taskText);
+//         }
+//     }) 
+// }
+
+// filterInput.addEventListener('input', filterTasks);
 
 
