@@ -1,18 +1,5 @@
 @import url('./reset.css');
 
-.flex{
-    display: flex;
-}
-.items-center{
-    align-items: center;
-}
-.items-normal{
-    align-items: normal;
-}
-.justify-between{
-    justify-content: space-between;
-}
-
 .main-container {
     flex-wrap: wrap-reverse;
     margin: 100px auto;
@@ -24,10 +11,25 @@
     padding: 50px 50px 30px 0;  
 }
 
-.task-item , .sidebar-title , .task-header{
+.task-item , .task-header{
     margin-bottom: 15px;
 }
 
+.category{
+    width: fit-content;
+    font-size:18px;
+}
+
+.btn-all-tasks{
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+.category , .btn-all-tasks{
+    padding:0;
+    color: black;
+    background-color: transparent;
+}
 .new-category-input {
     background-color: transparent;
     padding: 10px 0;
@@ -53,23 +55,19 @@
     border:1.5px solid black; 
 }
 .all-task{
-    overflow-y: scroll;
-    height: 350px;
     margin: 30px 10px 0;
 }
-.cercle{
+.checkbox{
     position: relative;
     border: 2px solid #EB5757;
     border-radius: 10px;
     padding: 12px;
     background: transparent;
 }
-.task-count{
-    padding: 3px 8px;
-    font-size: 12px;
-    margin-left: 10px;
-    border-radius: 15px;
+.task-count,.total-count{
+    float: right;
 }
+
 .all-task-item{
     gap: 0 15px;
     padding-bottom:20px;
@@ -81,7 +79,7 @@
     border-radius: 20px;
     color: white;
 }
-.btn-remove , .btn-heart{
+.btn-remove , .btn-heart {
     padding: 0;
     background: transparent;
     color: black;
@@ -98,7 +96,7 @@
 {
     display: block;
 }
-.cercle::after {
+.checkbox::after {
     display: none;
     content: "";
     position: absolute;
@@ -106,12 +104,12 @@
     background-size: contain;
     inset: -4px 0 0 2px;
 }
-.cercle.checked::after {
+.checkbox.checked::after {
     display: block;
 }
 .task-header{
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     gap: 15px;
 }
 .search-form > input{
@@ -124,16 +122,13 @@
     transition: width 0.5s ease;
 } 
 /********************************************************media query**********************************************/
-@media screen and (max-width : 745px){
+@media screen and (max-width : 900px){
     .sidebar {
         border-right: 0;
         border-top: 1px solid #ABABAB;
         width: 100%;
     }
-    .all-task {
-        overflow-y:inherit;
-        height: auto;
-    }
+
 }
  @media screen and (max-width : 1000px){
     .task-form{
