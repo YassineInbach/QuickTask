@@ -94,16 +94,13 @@ function incrementTaskCount(category, countChange) {
     });
 }
 
-
-
 function handleRemoveClick(event) {
-    const removeButton = event.target.closest('.btn-remove');
-    const taskItem = removeButton.closest('.all-task-item');
-    const cercleButton = taskItem.querySelector('.checkbox');
-    const category = taskItem.querySelector('.task-category').textContent;
+    let removeButton = event.target.closest('.btn-remove');
+    let taskItem = removeButton.closest('.all-task-item');
+    let cercleButton = taskItem.querySelector('.checkbox');
+    let category = taskItem.querySelector('.task-category').textContent;
     removeTask(taskItem, cercleButton, category);
 }
-
 
 function attachRemoveButtonListeners() {
     document.querySelectorAll('.btn-remove').forEach(button => {
@@ -111,8 +108,6 @@ function attachRemoveButtonListeners() {
         button.addEventListener('click', handleRemoveClick);
     });
 }
-
-
 
 // Function to remove taskItem
 function removeTask(taskItem, cercleButton , category) {
@@ -225,7 +220,6 @@ function updateCategoryCount(countChange) {
                 countSpan.textContent = newCount;
  }
 
-
 // Add event listener for adding tasks
 addButton.addEventListener('click', function(e) {
     e.preventDefault();
@@ -276,7 +270,8 @@ addButton.addEventListener('click', function(e) {
 
         // incrementTaskCount(selectedCategory)
         incrementTaskCount(selectedCategory , 1)
-         // Event listener for remove button
+        
+        // Event listener for remove button
         removeButton.addEventListener('click', function() {
             removeTask(tasksItem , cercleButton , selectedCategory)
         });
@@ -288,6 +283,8 @@ addButton.addEventListener('click', function(e) {
 
 // Initial setup
 attachCategoryButtonListeners();
+attachRemoveButtonListeners();
+
 
 
 
