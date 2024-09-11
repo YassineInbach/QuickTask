@@ -26,3 +26,16 @@ button{
 input{
     background-color: #e4e4e4;
 }
+
+.flex{
+    display: flex;
+}
+.items-center{
+    align-items: center;
+}
+.items-normal{
+    align-items: normal;
+}
+.justify-between{
+    justify-content: space-between;
+}
