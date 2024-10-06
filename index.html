@@ -8,7 +8,7 @@
       src="https://kit.fontawesome.com/04a76b9a09.js"
       crossorigin="anonymous"
     ></script>
-    <script src="./main.js" defer></script>
+    <script src="./script.js" defer></script>
     <title>Todo App</title>
   </head>
 
@@ -17,28 +17,6 @@
       <aside class="sidebar">
         <button class="btn-all-tasks"><b>ALL Tasks</b></button>
         <ul class="task-list">
-          <li class="task-item ">
-            <span style="font-size: 18px " data-category = "Favorites">Favourites</span>
-            <span class="total-count">0</span>
-          </li>
-          <li class="task-item">
-            <button class="category" data-category="Groceries">
-              Groceries
-            </button>
-            <span class="task-count">1</span>
-          </li>
-          <li class="task-item">
-            <button class="category" data-category="Work">Work</button>
-            <span class="task-count">1</span>
-          </li>
-          <li class="task-item">
-            <button class="category" data-category="study">Study</button>
-            <span class="task-count">0</span>
-          </li>
-          <li class="task-item">
-            <button class="category" data-category="Sports">Sports</button>
-            <span class="task-count">1</span>
-          </li>
         </ul>
         <form class="new-category-form" action="">
           <input
@@ -47,14 +25,14 @@
             placeholder="+ New category"
             required
           />
-          <button type="submit" class="new-category-btn">
+          <button type="submit">
             <b>New category</b>
           </button>
         </form>
       </aside>
       <section class="task-form-container">
         <div class="task-header flex justify-between">
-          <h1 style="font-size: 30px" id="title">ALL Tasks</h1>
+          <h1 style="font-size: 30px" id="title"></h1>
           <form class="search-form flex" action="#" method="get">
             <input
               type="text"
@@ -82,54 +60,10 @@
             class="category-select"
             required
           >
-            <option value="" disabled selected>Select a category</option>
-            <option value="groceries">Groceries</option>
-            <option value="work">Work</option>
-            <option value="study">Study</option>
-            <option value="sports">Sports</option>
           </select>
           <button type="submit" class="add-button"><strong>Add</strong></button>
         </form>
         <ul class="all-task">
-          <li class="all-task-item flex items-center">
-            <button class="checkbox"></button>
-            <p class="task-text"><b>Buy Bananas for the pancakes</b></p>
-            <span class="task-category" style="background-color: #27ae60"
-              >Groceries</span
-            >
-            <button type="submit" class="btn-heart">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button type="submit" class="btn-remove">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </li>
-          <li class="all-task-item flex items-center">
-            <button class="checkbox"></button>
-            <p class="task-text"><b>Go to the Gym</b></p>
-            <span class="task-category" style="background-color: #9b51e0"
-              >Sports</span
-            >
-            <button type="submit" class="btn-heart">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button type="submit" class="btn-remove">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </li>
-          <li class="all-task-item flex items-center">
-            <button class="checkbox"></button>
-            <p class="task-text"><b>Prepare roadmap for MVP</b></p>
-            <span class="task-category" style="background-color: #2f80ed"
-              >Work</span
-            >
-            <button type="submit" class="btn-heart">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button type="submit" class="btn-remove">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </li>
         </ul>
       </section>
     </main>
