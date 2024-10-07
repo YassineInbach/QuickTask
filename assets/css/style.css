@@ -8,28 +8,31 @@
 
 .sidebar {
     border-right: 1px solid #ABABAB;
-    padding: 50px 50px 30px 0;  
+    padding: 50px 50px 30px 0;
 }
 
-.task-item , .task-header{
+.task-item,
+.task-header {
     margin-bottom: 15px;
 }
 
-.category{
+.category {
     width: fit-content;
-    font-size:18px;
+    font-size: 18px;
 }
 
-.btn-all-tasks{
+.btn-all-tasks {
     margin-bottom: 25px;
     font-size: 25px;
 }
 
-.category , .btn-all-tasks{
-    padding:0;
+.category,
+.btn-all-tasks {
+    padding: 0;
     color: black;
     background-color: transparent;
 }
+
 .new-category-input {
     background-color: transparent;
     padding: 10px 0;
@@ -37,65 +40,81 @@
     color: #ABABAB;
 }
 
-.task-form-container{
+.task-form-container {
     flex: 1 1 430px;
 }
-.task-form{
+
+.task-form {
     gap: 15px;
 }
-.task-input{
+
+.task-input {
     width: 100%;
     padding: 12px 11px;
 }
-.task-input::placeholder{
+
+.task-input::placeholder {
     font-size: 14px;
 }
-.category-select{
+
+.category-select {
     padding: 10px 0;
-    border:1.5px solid black; 
+    border: 1.5px solid black;
 }
-.all-task{
+
+.all-task {
     margin: 30px 10px 0;
 }
-.checkbox{
+
+.checkbox {
     position: relative;
     border: 2px solid #EB5757;
     border-radius: 10px;
     padding: 12px;
     background: transparent;
 }
-.task-count,.total-count{
+
+.task-count,
+.total-count {
     float: right;
 }
 
-.all-task-item{
+.all-task-item {
     gap: 0 15px;
-    padding-bottom:20px;
+    padding-bottom: 20px;
     cursor: pointer;
 }
-.task-category{
+
+.task-category {
     font-size: 14px;
     padding: 6px 20px;
     border-radius: 20px;
     color: white;
 }
-.btn-remove , .btn-heart {
+
+.btn-remove,
+.btn-heart {
     padding: 0;
     background: transparent;
     color: black;
     display: none;
 }
-.fa-heart,.fa-trash,.fa-magnifying-glass{
+
+.fa-heart,
+.fa-trash,
+.fa-magnifying-glass {
     font-size: 1.5em;
 }
-.fa-heart{
+
+.fa-heart {
     color: red;
 }
+
 .all-task-item:hover .btn-heart,
-.all-task-item:hover .btn-remove
-{
+.all-task-item:hover .btn-remove {
     display: block;
 }
+
 .checkbox::after {
     display: none;
     content: "";
@@ -104,25 +123,30 @@
     background-size: contain;
     inset: -4px 0 0 2px;
 }
+
 .checkbox.checked::after {
     display: block;
 }
-.task-header{
+
+.task-header {
     flex-wrap: wrap;
     align-items: center;
     gap: 15px;
 }
-.search-form > input{
+
+.search-form>input {
     width: 100%;
 }
-.search-form{
+
+.search-form {
     justify-content: flex-end;
     padding: 10px 0;
     width: 0;
     transition: width 0.5s ease;
-} 
+}
+
 /********************************************************media query**********************************************/
-@media screen and (max-width : 900px){
+@media screen and (max-width : 900px) {
     .sidebar {
         border-right: 0;
         border-top: 1px solid #ABABAB;
@@ -130,11 +154,14 @@
     }
 
 }
- @media screen and (max-width : 1000px){
-    .task-form{
-       flex-wrap: wrap;
+
+@media screen and (max-width : 1000px) {
+    .task-form {
+        flex-wrap: wrap;
     }
-    .category-select ,.task-form button{
+
+    .category-select,
+    .task-form button {
         flex: 1 1 200px;
     }
- }
+}
