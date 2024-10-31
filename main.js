@@ -184,29 +184,26 @@ taskForm.addEventListener("submit", function (event) {
   categorySelect.value = "";
 });
 
-// Gestionnaire d'événements pour le bouton "ALL Tasks"
-allTasksButton.addEventListener("click", function () {
-  title.textContent = "All Tasks";
-  title.style.color = "black";
-  displayTasks();
-});
+
 
 // Fonction pour afficher les tâches dans le DOM
 function displayTasks(selectedCategory = null) {
   allTasks.innerHTML = "";
-
-  let filteredTasks =
-    selectedCategory === "Favorites"
-      ? tasks.filter((task) => task.liked == true) // Vérifiez si "liked" est vrai
-      : selectedCategory
-      ? tasks.filter((task) => task.category === selectedCategory)
-      : tasks;
-  // Filtrer les tâches en fonction de l'input de recherche
+  let filteredTasks;
+  
+  if (selectedCategory === null || selectedCategory === "All Tasks") {
+      filteredTasks = tasks;
+  } else if (selectedCategory === "Favorites") {
+      filteredTasks = tasks.filter((task) => task.liked);
+  } else {
+      filteredTasks = tasks.filter((task) => task.category === selectedCategory);
+  }
+  
+  // Appliquer le filtre de recherche s'il y a une entrée dans filterInput
   let searchTerm = filterInput.value.toLowerCase();
   filteredTasks = filteredTasks.filter((task) =>
-    task.text.toLowerCase().includes(searchTerm)
+      task.text.toLowerCase().includes(searchTerm)
   );
-
   if (filteredTasks.length === 0) {
     allTasks.innerHTML = "<li>Aucune tâche trouvée.</li>"; // Message si aucune tâche n'est trouvée
   } else {
@@ -297,6 +294,12 @@ function displayTasks(selectedCategory = null) {
     });
   }
 }
+
+allTasksButton.addEventListener("click", function () {
+  title.textContent = "All Tasks";
+  title.style.color = "black";
+  displayTasks(null); // Ou utilisez `displayTasks("All Tasks")` pour être explicite
+});
 
 // Écouteur d'événements pour les boutons de catégorie
 taskList.addEventListener("click", function (event) {
